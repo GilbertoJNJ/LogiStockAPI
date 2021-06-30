@@ -18,7 +18,6 @@ public class CategoryDTO {
 
     private Long id;
 
-    @NotEmpty
     @Size(min = 2, max = 100)
     private String category;
 }

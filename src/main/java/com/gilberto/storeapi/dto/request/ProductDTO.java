@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import java.util.List;
 
 @Data
 @Builder
@@ -22,7 +21,7 @@ public class ProductDTO {
 
     @NotEmpty
     @Size(min = 2, max = 100)
-    private String Name;
+    private String name;
 
     @NotEmpty
     private String buyPrice;
@@ -31,6 +30,5 @@ public class ProductDTO {
     private String sellPrice;
 
     @Valid
-    @NotEmpty
-    private List<CategoryDTO> category;
+    private CategoryDTO category;
 }

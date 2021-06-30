@@ -2,7 +2,6 @@ package com.gilberto.storeapi.controller;
 
 import com.gilberto.storeapi.dto.request.ProductDTO;
 import com.gilberto.storeapi.dto.response.MessageResponseDTO;
-import com.gilberto.storeapi.entity.Product;
 import com.gilberto.storeapi.exception.ProductNotFoundException;
 import com.gilberto.storeapi.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -22,23 +21,23 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO createProduct(@RequestBody @Valid Product product) {
-        return productService.createProduct(product);
+    public MessageResponseDTO createProduct(@RequestBody @Valid ProductDTO productDTO) {
+        return productService.createProduct(productDTO);
     }
 
     @GetMapping
-    public List<Product> listAll() {
+    public List<ProductDTO> listAll() {
         return productService.listAll();
     }
 
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id) throws ProductNotFoundException {
+    public ProductDTO findById(@PathVariable Long id) throws ProductNotFoundException {
         return productService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public MessageResponseDTO updateById(@PathVariable Long id, @RequestBody @Valid Product product) throws ProductNotFoundException {
-        return productService.updateById(id, product);
+    public MessageResponseDTO updateById(@PathVariable Long id, @RequestBody @Valid ProductDTO productDTO) throws ProductNotFoundException {
+        return productService.updateById(id, productDTO);
     }
 
     @DeleteMapping("/{id}")

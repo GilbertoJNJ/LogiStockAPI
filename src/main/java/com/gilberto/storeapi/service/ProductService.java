@@ -19,29 +19,26 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
-    //private final ProductMapper productMapper = ProductMapper.INSTANCE;
+    private final ProductMapper productMapper = ProductMapper.INSTANCE;
 
-    public MessageResponseDTO createProduct(Product product){
-        //Product productToSave = productMapper.toModel(productDTO);
+    public MessageResponseDTO createProduct(ProductDTO productDTO){
+        Product productToSave = productMapper.toModel(productDTO);
 
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = productRepository.save(productToSave);
         return createMessageResponse(savedProduct.getId(), "Created product with ID " );
     }
 
-    public List<Product> listAll() {
+    public List<ProductDTO> listAll() {
         List<Product> allProduct = productRepository.findAll();
-        /*return allProduct.stream()
+        return allProduct.stream()
                 .map(productMapper::toDTO)
                 .collect(Collectors.toList());
-
-         */
-        return allProduct;
     }
 
-    public Product findById(Long id) throws ProductNotFoundException {
+    public ProductDTO findById(Long id) throws ProductNotFoundException {
         Product product = verifyIfExists(id);
 
-        return product;
+        return productMapper.toDTO(product);
     }
 
     public void delete(Long id) throws ProductNotFoundException {
@@ -49,12 +46,12 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public MessageResponseDTO updateById(Long id, Product product) throws ProductNotFoundException {
+    public MessageResponseDTO updateById(Long id, ProductDTO productDTO) throws ProductNotFoundException {
         verifyIfExists(id);
 
-        //Product productToUpdate = productMapper.toModel(productDTO);
+        Product productToUpdate = productMapper.toModel(productDTO);
 
-        Product updatedProduct = productRepository.save(product);
+        Product updatedProduct = productRepository.save(productToUpdate);
         return createMessageResponse(updatedProduct.getId(), "Updated product with ID ");
     }
 
