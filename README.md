@@ -23,9 +23,9 @@
  - Spring Data JPA
  - Spring Web
  - Spring Boot DevTools
- - Lombok
- - H2 Database
- - Mapstruct
+ - [Lombok](https://projectlombok.org/)
+ - [H2 Database](https://www.h2database.com/html/main.html)
+ - [MapStruct](https://mapstruct.org/)
 
 ## Install 
 1. In the terminal, clone the project:
