@@ -1,4 +1,4 @@
-package com.gilberto.storeapi.dto.request;
+package com.gilberto.productsapi.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

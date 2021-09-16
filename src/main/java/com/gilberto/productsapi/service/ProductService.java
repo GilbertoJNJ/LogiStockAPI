@@ -1,11 +1,11 @@
-package com.gilberto.storeapi.service;
+package com.gilberto.productsapi.service;
 
-import com.gilberto.storeapi.dto.request.ProductDTO;
-import com.gilberto.storeapi.dto.response.MessageResponseDTO;
-import com.gilberto.storeapi.entity.Product;
-import com.gilberto.storeapi.exception.ProductNotFoundException;
-import com.gilberto.storeapi.mapper.ProductMapper;
-import com.gilberto.storeapi.repository.ProductRepository;
+import com.gilberto.productsapi.dto.request.ProductDTO;
+import com.gilberto.productsapi.dto.response.MessageResponseDTO;
+import com.gilberto.productsapi.entity.Product;
+import com.gilberto.productsapi.exception.ProductNotFoundException;
+import com.gilberto.productsapi.mapper.ProductMapper;
+import com.gilberto.productsapi.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

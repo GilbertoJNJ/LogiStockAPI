@@ -1,0 +1,6 @@
+   ${Ansi.BRIGHT_CYAN}____ ____         __ _
+  ${Ansi.BRIGHT_CYAN}/ ___/ ___|  ___  / _| |___      ____ _ _ __ ___
+ ${Ansi.BRIGHT_CYAN}| |  _\___ \ / _ \| |_| __\ \ /\ / / _` | '__/ _ \
+ ${Ansi.BRIGHT_CYAN}| |_| |___) | (_) |  _| |_ \ V  V / (_| | | |  __/
+  ${Ansi.BRIGHT_CYAN}\____|____/ \___/|_|  \__| \_/\_/ \__,_|_|  \___|${Ansi.DEFAULT}
+                              Engineering Solutions
