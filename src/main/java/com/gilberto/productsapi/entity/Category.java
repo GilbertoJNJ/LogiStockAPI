@@ -1,4 +1,4 @@
-package com.gilberto.storeapi.entity;
+package com.gilberto.productsapi.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

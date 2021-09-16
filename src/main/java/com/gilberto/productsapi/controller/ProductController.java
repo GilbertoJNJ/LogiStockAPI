@@ -1,9 +1,9 @@
-package com.gilberto.storeapi.controller;
+package com.gilberto.productsapi.controller;
 
-import com.gilberto.storeapi.dto.request.ProductDTO;
-import com.gilberto.storeapi.dto.response.MessageResponseDTO;
-import com.gilberto.storeapi.exception.ProductNotFoundException;
-import com.gilberto.storeapi.service.ProductService;
+import com.gilberto.productsapi.dto.request.ProductDTO;
+import com.gilberto.productsapi.dto.response.MessageResponseDTO;
+import com.gilberto.productsapi.exception.ProductNotFoundException;
+import com.gilberto.productsapi.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

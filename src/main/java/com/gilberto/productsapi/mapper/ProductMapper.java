@@ -1,7 +1,7 @@
-package com.gilberto.storeapi.mapper;
+package com.gilberto.productsapi.mapper;
 
-import com.gilberto.storeapi.dto.request.ProductDTO;
-import com.gilberto.storeapi.entity.Product;
+import com.gilberto.productsapi.dto.request.ProductDTO;
+import com.gilberto.productsapi.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
