@@ -9,7 +9,7 @@
 ## Description
 :trophy: Registry, update or delete products in a database;
 
-:trophy: Lists all the products of an establishment and searches by id;
+:trophy: Lists all the products of an establishment and searches by name;
 
 :trophy: Control stock by increasing or decreasing the quantity of products.
 
