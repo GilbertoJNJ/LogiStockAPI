@@ -19,7 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String name;
 
     @Column(nullable = false)
@@ -30,4 +30,10 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Category category;
+
+    @Column(nullable = false)
+    private int quantity;
+
+    @Column(nullable = false)
+    private Integer maxQuantity;
 }

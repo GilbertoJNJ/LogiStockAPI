@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
@@ -19,16 +20,25 @@ public class ProductDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @Size(min = 2, max = 100)
     private String name;
 
-    @NotEmpty
+    @NotNull
     private String buyPrice;
 
-    @NotEmpty
+    @NotNull
     private String sellPrice;
 
     @Valid
     private CategoryDTO category;
+
+    @NotNull
+    @Max(100)
+    private Integer quantity;
+
+    @NotNull
+    @Max(500)
+    private Integer maxQuantity;
+
 }
