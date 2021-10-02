@@ -35,7 +35,7 @@
 ## Install 
 1. In the terminal, clone the project:
 ```shell script
-git clone https://github.com/GilbertoJNJ/Store-API.git
+git clone https://github.com/GilbertoJNJ/Products-API.git
 ```
 
 2. Enter in the projet diretory:
