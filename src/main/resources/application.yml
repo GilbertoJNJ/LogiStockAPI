@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: LogiStockAPI
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/products"
+    username: "postgres_user_product"
+    password: "super_password"
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    open-in-view: true
