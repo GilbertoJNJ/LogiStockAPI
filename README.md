@@ -1,4 +1,4 @@
-# Products-API
+# LogiStockAPI
 ## :book:Summary 
 * [1. Description](#description)
 * [2. Technologies](#technologies)
@@ -16,31 +16,24 @@
 ## Technologies
 - <img src="https://img.shields.io/static/v1?label=java&message=language&color=red&style=for-the-badge&logo=java"/>
 - <img src="https://img.shields.io/static/v1?label=maven&message=build&color=red&style=for-the-badge&logo=apachemaven"/>
-- <img src="https://img.shields.io/static/v1?label=h2-database&message=database&color=blue&style=for-the-badge&logo=h2database"/>
+- <img src="https://img.shields.io/static/v1?label=postgres&message=database&color=blue&style=for-the-badge&logo=postgresql"/>
 - <img src="https://img.shields.io/static/v1?label=spring&message=framework&color=green&style=for-the-badge&logo=spring"/>
-- <img src="https://img.shields.io/static/v1?label=postman&message=apiclient&color=orange&style=for-the-badge&logo=postman"/>
 - <img src="https://img.shields.io/static/v1?label=junit&message=tests&color=darkgreen&style=for-the-badge&logo=junit5"/>
-- <img src="https://img.shields.io/static/v1?label=heroku&message=deploy&color=purple&style=for-the-badge&logo=heroku"/>
-- <img src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white"/>
 
 ## Dependencies
  - Spring Data JPA
  - Spring Web
- - Spring Boot DevTools
- - Spring Test
  - [Lombok](https://projectlombok.org/)
- - [H2 Database](https://www.h2database.com/html/main.html)
- - [MapStruct](https://mapstruct.org/)
 
 ## Install 
 1. In the terminal, clone the project:
 ```shell script
-git clone https://github.com/GilbertoJNJ/Products-API.git
+git clone https://github.com/GilbertoJNJ/LogiStockAPI.git
 ```
 
 2. Enter in the projet diretory:
 ```shell script
-cd ~\productsapi
+cd ~\logistockapi
 ```
 
 3. Execute the command:
