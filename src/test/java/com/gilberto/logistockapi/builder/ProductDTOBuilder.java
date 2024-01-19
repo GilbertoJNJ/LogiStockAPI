@@ -1,7 +1,6 @@
 package com.gilberto.logistockapi.builder;
 
-import com.gilberto.logistockapi.models.dto.request.CategoryDTO;
-import com.gilberto.logistockapi.models.dto.request.ProductDTO;
+import com.gilberto.logistockapi.models.dto.request.ProductForm;
 import lombok.Builder;
 
 
@@ -22,16 +21,13 @@ public class ProductDTOBuilder {
     private String sellPrice = "40.0";
 
     @Builder.Default
-    private CategoryDTO categoryDTO = CategoryDTO.builder().id(1L).category("bebida").build();
-
-    @Builder.Default
     private int quantity = 10;
 
     @Builder.Default
     private int maxQuantity = 100;
 
 
-    public ProductDTO toProductDTO() {
-        return new ProductDTO(id, name, buyPrice, sellPrice, categoryDTO, quantity, maxQuantity);
+    public ProductForm toProductDTO() {
+        return new ProductForm();
     }
 }

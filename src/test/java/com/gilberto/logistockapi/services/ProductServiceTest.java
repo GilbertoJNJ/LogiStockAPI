@@ -1,7 +1,7 @@
 package com.gilberto.logistockapi.services;
 
 import com.gilberto.logistockapi.builder.ProductDTOBuilder;
-import com.gilberto.logistockapi.models.dto.request.ProductDTO;
+import com.gilberto.logistockapi.models.dto.request.ProductForm;
 import com.gilberto.logistockapi.models.dto.response.MessageResponseDTO;
 import com.gilberto.logistockapi.models.entity.Product;
 import com.gilberto.logistockapi.exceptions.ProductAlreadyRegisteredException;
@@ -41,8 +41,8 @@ public class ProductServiceTest {
     @Test
     void whenProductIsInformedThenItShouldBeCreated() throws ProductAlreadyRegisteredException {
         // given
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedSavedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO   = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedSavedProduct = new Product(expectedProductDTO);
 
         // when
         when(productRepository.findByName(expectedProductDTO.getName())).thenReturn(Optional.empty());
@@ -57,8 +57,8 @@ public class ProductServiceTest {
     @Test
     void whenAlreadyRegisteredProductInformedThenAnExceptionShouldBeThrown() {
         // given
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product duplicatedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     duplicatedProduct  = new Product(expectedProductDTO);
 
         // when
         when(productRepository.findByName(expectedProductDTO.getName())).thenReturn(Optional.of(duplicatedProduct));
@@ -71,14 +71,14 @@ public class ProductServiceTest {
     @Test
     void whenValidProductNameIsGivenThenReturnAProduct() throws ProductNotFoundException {
         // given
-        ProductDTO expectedFoundProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedFoundProduct = new Product(expectedFoundProductDTO);
+        ProductForm expectedFoundProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedFoundProduct    = new Product(expectedFoundProductDTO);
 
         // when
         when(productRepository.findByName(expectedFoundProduct.getName())).thenReturn(Optional.of(expectedFoundProduct));
 
         // then
-        ProductDTO foundProductDTO = productService.findByName(expectedFoundProductDTO.getName());
+        ProductForm foundProductDTO = productService.findByName(expectedFoundProductDTO.getName());
 
         assertThat(foundProductDTO, is(equalTo(expectedFoundProductDTO)));
     }
@@ -86,7 +86,7 @@ public class ProductServiceTest {
     @Test
     void whenNotRegisteredProductNameIsGivenThenThrowAnException() {
         // given
-        ProductDTO expectedFoundProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm expectedFoundProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         // when
         when(productRepository.findByName(expectedFoundProductDTO.getName())).thenReturn(Optional.empty());
@@ -99,14 +99,14 @@ public class ProductServiceTest {
     @Test
     void whenListProductsIsCalledThenReturnAListOfProducts() {
         // given
-        ProductDTO expectedFoundProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedFoundProduct = new Product(expectedFoundProductDTO);
+        ProductForm expectedFoundProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedFoundProduct    = new Product(expectedFoundProductDTO);
 
         //when
         when(productRepository.findAll()).thenReturn(Collections.singletonList(expectedFoundProduct));
 
         //then
-        List<ProductDTO> foundListProductDTO = productService.listAll();
+        List<ProductForm> foundListProductDTO = productService.listAll();
 
         assertThat(foundListProductDTO, is(not(empty())));
         assertThat(foundListProductDTO.get(0), is(equalTo(expectedFoundProductDTO)));
@@ -118,7 +118,7 @@ public class ProductServiceTest {
         when(productRepository.findAll()).thenReturn(Collections.emptyList());
 
         //then
-        List<ProductDTO> foundListProductsDTO = productService.listAll();
+        List<ProductForm> foundListProductsDTO = productService.listAll();
 
         assertThat(foundListProductsDTO, is(empty()));
     }
@@ -127,8 +127,8 @@ public class ProductServiceTest {
     @Test
     void whenExclusionIsCalledWithValidIdThenAProductShouldBeDeleted() throws ProductNotFoundException {
         // given
-        ProductDTO expectedDeletedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedDeletedProduct = new Product(expectedDeletedProductDTO);
+        ProductForm expectedDeletedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedDeletedProduct    = new Product(expectedDeletedProductDTO);
 
         // when
         when(productRepository.findById(expectedDeletedProductDTO.getId())).thenReturn(Optional.of(expectedDeletedProduct));
@@ -157,8 +157,8 @@ public class ProductServiceTest {
     @Test
     void whenUpdateIsCalledWithValidIdThenAProductShouldBeUpdated() throws ProductNotFoundException {
         //Given
-        ProductDTO expectedUpdatedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedUpdatedProduct = new Product(expectedUpdatedProductDTO);
+        ProductForm expectedUpdatedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedUpdatedProduct    = new Product(expectedUpdatedProductDTO);
 
         //when
         when(productRepository.findById(expectedUpdatedProductDTO.getId())).thenReturn(Optional.of(expectedUpdatedProduct));
@@ -173,7 +173,7 @@ public class ProductServiceTest {
     @Test
     void whenUpdateIsCalledWithInvalidIdThenThrowAnException() {
         //Given
-        ProductDTO expectedUpdatedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm expectedUpdatedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
         when(productRepository.findById(INVALID_PRODUCT_ID)).thenReturn(Optional.empty());
@@ -186,8 +186,8 @@ public class ProductServiceTest {
     @Test
     void whenIncrementIsCalledThenIncrementProductStock() throws ProductNotFoundException, ProductStockExceededException {
         //given
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedProduct    = new Product(expectedProductDTO);
 
         //when
         when(productRepository.findById(expectedProductDTO.getId())).thenReturn(Optional.of(expectedProduct));
@@ -197,7 +197,7 @@ public class ProductServiceTest {
         int expectedQuantityAfterIncrement = expectedProductDTO.getQuantity() + quantityToIncrement;
 
         // then
-        ProductDTO incrementedProductDTO = productService.increment(expectedProductDTO.getId(), quantityToIncrement);
+        ProductForm incrementedProductDTO = productService.increment(expectedProductDTO.getId(), quantityToIncrement);
 
         assertThat(expectedQuantityAfterIncrement, equalTo(incrementedProductDTO.getQuantity()));
         assertThat(expectedQuantityAfterIncrement, lessThan(expectedProductDTO.getMaxQuantity()));
@@ -206,8 +206,8 @@ public class ProductServiceTest {
     @Test
     void whenIncrementAfterSumIsEqualsTheMaxQuantityThenIncrementProductStock() throws ProductNotFoundException, ProductStockExceededException {
         //given
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedProduct    = new Product(expectedProductDTO);
 
         //when
         when(productRepository.findById(expectedProductDTO.getId())).thenReturn(Optional.of(expectedProduct));
@@ -217,7 +217,7 @@ public class ProductServiceTest {
         int expectedQuantityAfterIncrement = expectedProductDTO.getQuantity() + quantityToIncrement;
 
         // then
-        ProductDTO incrementedProductDTO = productService.increment(expectedProductDTO.getId(), quantityToIncrement);
+        ProductForm incrementedProductDTO = productService.increment(expectedProductDTO.getId(), quantityToIncrement);
 
         assertThat(expectedQuantityAfterIncrement, equalTo(incrementedProductDTO.getQuantity()));
         assertThat(expectedQuantityAfterIncrement, equalTo(expectedProductDTO.getMaxQuantity()));
@@ -225,8 +225,8 @@ public class ProductServiceTest {
 
     @Test
     void whenIncrementAfterSumIsGreatherThanMaxThenThrowException() {
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedProduct    = new Product(expectedProductDTO);
 
         when(productRepository.findById(expectedProductDTO.getId())).thenReturn(Optional.of(expectedProduct));
 
@@ -246,15 +246,15 @@ public class ProductServiceTest {
     //Decrement
     @Test
     void whenDecrementIsCalledThenDecrementProductStock() throws ProductNotFoundException, ProductStockUnderThanZeroException {
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedProduct    = new Product(expectedProductDTO);
 
         when(productRepository.findById(expectedProductDTO.getId())).thenReturn(Optional.of(expectedProduct));
         when(productRepository.save(expectedProduct)).thenReturn(expectedProduct);
 
         int quantityToDecrement = 9;
-        int expectedQuantityAfterDecrement = expectedProductDTO.getQuantity() - quantityToDecrement;
-        ProductDTO decrementedProductDTO = productService.decrement(expectedProductDTO.getId(), quantityToDecrement);
+        int         expectedQuantityAfterDecrement = expectedProductDTO.getQuantity() - quantityToDecrement;
+        ProductForm decrementedProductDTO          = productService.decrement(expectedProductDTO.getId(), quantityToDecrement);
 
         assertThat(expectedQuantityAfterDecrement, equalTo(decrementedProductDTO.getQuantity()));
         assertThat(expectedQuantityAfterDecrement, greaterThan(0));
@@ -262,15 +262,15 @@ public class ProductServiceTest {
 
     @Test
     void whenDecrementIsCalledToEmptyStockThenEmptyProductStock() throws ProductStockUnderThanZeroException, ProductNotFoundException {
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedProduct    = new Product(expectedProductDTO);
 
         when(productRepository.findById(expectedProductDTO.getId())).thenReturn(Optional.of(expectedProduct));
         when(productRepository.save(expectedProduct)).thenReturn(expectedProduct);
 
         int quantityToDecrement = 10;
-        int expectedQuantityAfterDecrement = expectedProductDTO.getQuantity() - quantityToDecrement;
-        ProductDTO incrementedProductDTO = productService.decrement(expectedProductDTO.getId(), quantityToDecrement);
+        int         expectedQuantityAfterDecrement = expectedProductDTO.getQuantity() - quantityToDecrement;
+        ProductForm incrementedProductDTO          = productService.decrement(expectedProductDTO.getId(), quantityToDecrement);
 
         assertThat(expectedQuantityAfterDecrement, equalTo(0));
         assertThat(expectedQuantityAfterDecrement, equalTo(incrementedProductDTO.getQuantity()));
@@ -278,8 +278,8 @@ public class ProductServiceTest {
 
     @Test
     void whenDecrementIsLowerThanZeroThenThrowException() {
-        ProductDTO expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
-        Product expectedProduct = new Product(expectedProductDTO);
+        ProductForm expectedProductDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        Product     expectedProduct    = new Product(expectedProductDTO);
 
         when(productRepository.findById(expectedProductDTO.getId())).thenReturn(Optional.of(expectedProduct));
 

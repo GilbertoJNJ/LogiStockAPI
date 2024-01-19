@@ -1,6 +1,6 @@
 package com.gilberto.logistockapi.services;
 
-import com.gilberto.logistockapi.models.dto.request.ProductDTO;
+import com.gilberto.logistockapi.models.dto.request.ProductForm;
 import com.gilberto.logistockapi.models.dto.response.MessageResponseDTO;
 import com.gilberto.logistockapi.models.entity.Product;
 import com.gilberto.logistockapi.exceptions.ProductAlreadyRegisteredException;
@@ -24,7 +24,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public MessageResponseDTO createProduct(ProductDTO productDTO) throws ProductAlreadyRegisteredException{
+    public MessageResponseDTO createProduct(ProductForm productDTO) throws ProductAlreadyRegisteredException{
 
         verifyIfIsAlreadyRegistered(productDTO.getName());
         Product productToSave = new Product(productDTO);
@@ -35,18 +35,18 @@ public class ProductService {
 
     }
 
-    public List<ProductDTO> listAll() {
+    public List<ProductForm> listAll() {
         List<Product> allProduct = productRepository.findAll();
         return allProduct.stream()
-                .map(ProductDTO::new)
+                .map(ProductForm::new)
                 .collect(Collectors.toList());
     }
 
-    public ProductDTO findByName(String name) throws ProductNotFoundException {
+    public ProductForm findByName(String name) throws ProductNotFoundException {
         Product product = productRepository.findByName(name)
                 .orElseThrow(() -> new ProductNotFoundException(name));
 
-        return new ProductDTO(product);
+        return new ProductForm(product);
     }
 
     public MessageResponseDTO delete(Long id) throws ProductNotFoundException {
@@ -55,7 +55,7 @@ public class ProductService {
         return createMessageResponse(id, "Deleted product with ID ");
     }
 
-    public MessageResponseDTO updateById(Long id, ProductDTO productDTO) throws ProductNotFoundException {
+    public MessageResponseDTO updateById(Long id, ProductForm productDTO) throws ProductNotFoundException {
         verifyIfExists(id);
 
         Product productToUpdate = new Product(productDTO);
@@ -64,24 +64,24 @@ public class ProductService {
         return createMessageResponse(updatedProduct.getId(), "Updated product with ID ");
     }
 
-    public ProductDTO increment(Long id, int quantityToIncrement) throws ProductNotFoundException, ProductStockExceededException {
+    public ProductForm increment(Long id, int quantityToIncrement) throws ProductNotFoundException, ProductStockExceededException {
         Product productToIncrementStock = verifyIfExists(id);
-        int quantityAfterIncrement = quantityToIncrement + productToIncrementStock.getQuantity();
-        if (quantityAfterIncrement <= productToIncrementStock.getMaxQuantity()) {
-            productToIncrementStock.setQuantity(quantityAfterIncrement);
+        int quantityAfterIncrement = quantityToIncrement + productToIncrementStock.getStockQuantity();
+        if (quantityAfterIncrement <= productToIncrementStock.getMaxStockLevel()) {
+            productToIncrementStock.setStockQuantity(quantityAfterIncrement);
             Product incrementedProductStock = productRepository.save(productToIncrementStock);
-            return new ProductDTO(incrementedProductStock);
+            return new ProductForm(incrementedProductStock);
         }
         throw new ProductStockExceededException(id, quantityToIncrement);
     }
 
-    public ProductDTO decrement(Long id, int quantityToDecrement) throws ProductNotFoundException, ProductStockUnderThanZeroException {
+    public ProductForm decrement(Long id, int quantityToDecrement) throws ProductNotFoundException, ProductStockUnderThanZeroException {
         Product productToDecrementStock = verifyIfExists(id);
-        int quantityAfterDecrement = productToDecrementStock.getQuantity()-quantityToDecrement;
+        int quantityAfterDecrement = productToDecrementStock.getStockQuantity()-quantityToDecrement;
         if(quantityAfterDecrement>=0){
-            productToDecrementStock.setQuantity(quantityAfterDecrement);
+            productToDecrementStock.setStockQuantity(quantityAfterDecrement);
             Product decrementedProductStock = productRepository.save(productToDecrementStock);
-            return new ProductDTO(decrementedProductStock);
+            return new ProductForm(decrementedProductStock);
         }
         throw new ProductStockUnderThanZeroException(id, quantityToDecrement);
     }

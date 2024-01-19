@@ -1,8 +1,8 @@
 package com.gilberto.logistockapi.controllers;
 
 import com.gilberto.logistockapi.builder.ProductDTOBuilder;
-import com.gilberto.logistockapi.models.dto.request.ProductDTO;
-import com.gilberto.logistockapi.models.dto.request.QuantityDTO;
+import com.gilberto.logistockapi.models.dto.request.ProductForm;
+import com.gilberto.logistockapi.models.dto.request.QuantityForm;
 import com.gilberto.logistockapi.models.dto.response.MessageResponseDTO;
 import com.gilberto.logistockapi.exceptions.ProductNotFoundException;
 import com.gilberto.logistockapi.exceptions.ProductStockExceededException;
@@ -60,7 +60,7 @@ public class ProductControllerTest {
     @Test
     void whenPOSTIsCalledThenAProductIsCreated() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         // when
         when(productService.createProduct(productDTO)).thenReturn(MessageResponseDTO
@@ -80,7 +80,7 @@ public class ProductControllerTest {
     @Test
     void whenPOSTIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
         productDTO.setName(null);
 
         // then
@@ -94,7 +94,7 @@ public class ProductControllerTest {
     @Test
     void whenPUTIsCalledThenAProductIsUpdated() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         // when
         when(productService.updateById(VALID_PRODUCT_ID,productDTO)).thenReturn(MessageResponseDTO
@@ -114,7 +114,7 @@ public class ProductControllerTest {
     @Test
     void whenPUTIsCalledWithInvalidIdThenAnErrorIsReturned() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
         doThrow(ProductNotFoundException.class).when(productService).updateById(INVALID_PRODUCT_ID,productDTO);
@@ -132,7 +132,7 @@ public class ProductControllerTest {
     @Test
     void whenGETIsCalledWithValidNameThenOkStatusIsReturned() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
         when(productService.findByName(productDTO.getName())).thenReturn(productDTO);
@@ -142,14 +142,14 @@ public class ProductControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
         .andExpect(jsonPath("$.name", is(productDTO.getName())))
-        .andExpect(jsonPath("$.buyPrice", is(productDTO.getBuyPrice())))
+        .andExpect(jsonPath("$.buyPrice", is(productDTO.getUnitPrice())))
         .andExpect(jsonPath("$.sellPrice", is(productDTO.getSellPrice())));
     }
 
     @Test
     void whenGETIsCalledWithoutRegisteredNameThenNotFoundStatusIsReturned() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
         when(productService.findByName(productDTO.getName())).thenThrow(ProductNotFoundException.class);
@@ -164,7 +164,7 @@ public class ProductControllerTest {
     @Test
     void whenGETListWithProductsIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
         when(productService.listAll()).thenReturn(Collections.singletonList(productDTO));
@@ -174,7 +174,7 @@ public class ProductControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
         .andExpect(jsonPath("$[0].name", is(productDTO.getName())))
-        .andExpect(jsonPath("$[0].buyPrice", is(productDTO.getBuyPrice())))
+        .andExpect(jsonPath("$[0].buyPrice", is(productDTO.getUnitPrice())))
         .andExpect(jsonPath("$[0].sellPrice", is(productDTO.getSellPrice())));
     }
 
@@ -194,7 +194,7 @@ public class ProductControllerTest {
     @Test
     void whenDELETEIsCalledWithValidIdThenNoContentStatusIsReturned() throws Exception {
         // given
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
         when(productService.delete(productDTO.getId())).thenReturn(MessageResponseDTO
@@ -221,11 +221,11 @@ public class ProductControllerTest {
     //PATCH
     @Test
     void whenPATCHIsCalledToIncrementDiscountThenOStatusIsReturned() throws Exception {
-        QuantityDTO quantityDTO = QuantityDTO.builder()
+        QuantityForm quantityDTO = QuantityForm.builder()
                 .quantity(10)
                 .build();
 
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
         productDTO.setQuantity(productDTO.getQuantity() + quantityDTO.getQuantity());
 
         when(productService.increment(VALID_PRODUCT_ID, quantityDTO.getQuantity())).thenReturn(productDTO);
@@ -240,11 +240,11 @@ public class ProductControllerTest {
 
     @Test
     void whenPATCHIsCalledToIncrementGreatherThanMaxThenBadRequestStatusIsReturned() throws Exception {
-        QuantityDTO quantityDTO = QuantityDTO.builder()
+        QuantityForm quantityDTO = QuantityForm.builder()
                 .quantity(91)
                 .build();
 
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
         productDTO.setQuantity(productDTO.getQuantity() + quantityDTO.getQuantity());
 
         when(productService.increment(VALID_PRODUCT_ID, quantityDTO.getQuantity())).thenThrow(ProductStockExceededException.class);
@@ -257,7 +257,7 @@ public class ProductControllerTest {
 
     @Test
     void whenPATCHIsCalledWithInvalidProductIdToIncrementThenNotFoundStatusIsReturned() throws Exception {
-        QuantityDTO quantityDTO = QuantityDTO.builder()
+        QuantityForm quantityDTO = QuantityForm.builder()
                 .quantity(30)
                 .build();
 
@@ -270,11 +270,11 @@ public class ProductControllerTest {
 
     @Test
     void whenPATCHIsCalledToDecrementDiscountThenOKstatusIsReturned() throws Exception {
-        QuantityDTO quantityDTO = QuantityDTO.builder()
+        QuantityForm quantityDTO = QuantityForm.builder()
                 .quantity(9)
                 .build();
 
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
         productDTO.setQuantity(productDTO.getQuantity() - quantityDTO.getQuantity());
 
         when(productService.decrement(VALID_PRODUCT_ID, quantityDTO.getQuantity())).thenReturn(productDTO);
@@ -289,11 +289,11 @@ public class ProductControllerTest {
 
     @Test
     void whenPATCHIsCalledToDEcrementLowerThanZeroThenBadRequestStatusIsReturned() throws Exception {
-        QuantityDTO quantityDTO = QuantityDTO.builder()
+        QuantityForm quantityDTO = QuantityForm.builder()
                 .quantity(11)
                 .build();
 
-        ProductDTO productDTO = ProductDTOBuilder.builder().build().toProductDTO();
+        ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
         productDTO.setQuantity(productDTO.getQuantity() - quantityDTO.getQuantity());
 
         when(productService.decrement(VALID_PRODUCT_ID, quantityDTO.getQuantity())).thenThrow(ProductStockUnderThanZeroException.class);
@@ -306,7 +306,7 @@ public class ProductControllerTest {
 
     @Test
     void whenPATCHIsCalledWithInvalidProductIdToDecrementThenNotFoundStatusIsReturned() throws Exception {
-        QuantityDTO quantityDTO = QuantityDTO.builder()
+        QuantityForm quantityDTO = QuantityForm.builder()
                 .quantity(5)
                 .build();
 

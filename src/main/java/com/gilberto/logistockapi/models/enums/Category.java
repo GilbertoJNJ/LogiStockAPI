@@ -1,26 +1,8 @@
 package com.gilberto.logistockapi.models.enums;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Entity
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class Category {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
-    private String category;
+/**
+ * Represents the category of a product.
+ */
+public enum Category {
+    ELECTRONIC, CLOTHING, FOOD, OTHER
 }
