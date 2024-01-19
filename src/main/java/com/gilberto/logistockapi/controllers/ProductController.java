@@ -40,7 +40,7 @@ public class ProductController {
     @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ProductForm findByName(@PathVariable String name) throws ProductNotFoundException {
-        return productService.findByName(name);
+        return productService.findByBarCode(name);
     }
 
     @PutMapping("/{id}")

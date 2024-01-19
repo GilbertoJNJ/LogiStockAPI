@@ -39,11 +39,11 @@ public class ProductForm {
   @NotNull
   private MeasureUnit measureUnit;
   
-  private Integer stockQuantity;
+  private Integer stockQuantity = 0;
   
-  private Integer minStockLevel;
+  private Integer minStockLevel = 10;
   
-  private Integer maxStockLevel;
+  private Integer maxStockLevel = 100;
   
   private String description;
   

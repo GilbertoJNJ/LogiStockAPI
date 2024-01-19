@@ -135,7 +135,7 @@ public class ProductControllerTest {
         ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
-        when(productService.findByName(productDTO.getName())).thenReturn(productDTO);
+        when(productService.findByBarCode(productDTO.getName())).thenReturn(productDTO);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get(PRODUCT_API_URL_PATH + "/" + productDTO.getName())
@@ -152,7 +152,7 @@ public class ProductControllerTest {
         ProductForm productDTO = ProductDTOBuilder.builder().build().toProductDTO();
 
         //when
-        when(productService.findByName(productDTO.getName())).thenThrow(ProductNotFoundException.class);
+        when(productService.findByBarCode(productDTO.getName())).thenThrow(ProductNotFoundException.class);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get(PRODUCT_API_URL_PATH + "/" + productDTO.getName())

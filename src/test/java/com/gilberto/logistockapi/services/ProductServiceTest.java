@@ -78,7 +78,7 @@ public class ProductServiceTest {
         when(productRepository.findByName(expectedFoundProduct.getName())).thenReturn(Optional.of(expectedFoundProduct));
 
         // then
-        ProductForm foundProductDTO = productService.findByName(expectedFoundProductDTO.getName());
+        ProductForm foundProductDTO = productService.findByBarCode(expectedFoundProductDTO.getName());
 
         assertThat(foundProductDTO, is(equalTo(expectedFoundProductDTO)));
     }
@@ -92,7 +92,7 @@ public class ProductServiceTest {
         when(productRepository.findByName(expectedFoundProductDTO.getName())).thenReturn(Optional.empty());
 
         // then
-        assertThrows(ProductNotFoundException.class, () -> productService.findByName(expectedFoundProductDTO.getName()));
+        assertThrows(ProductNotFoundException.class, () -> productService.findByBarCode(expectedFoundProductDTO.getName()));
     }
 
     //Find All

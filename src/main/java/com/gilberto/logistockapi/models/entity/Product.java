@@ -71,8 +71,16 @@ public class Product {
   @Column(name = "pro_description")
   private String description;
   
-  public Product(ProductForm dto) {
-    this.name = dto.getName();
+  public Product(ProductForm form) {
+    this.name = form.getName();
+    this.barCode = form.getBarCode();
+    this.category = form.getCategory();
+    this.unitPrice = form.getUnitPrice();
+    this.measureUnit = form.getMeasureUnit();
+    this.stockQuantity = form.getStockQuantity();
+    this.minStockLevel = form.getMinStockLevel();
+    this.maxStockLevel = form.getMaxStockLevel();
+    this.description = form.getDescription();
   }
   
 }
