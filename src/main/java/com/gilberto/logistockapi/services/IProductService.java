@@ -4,26 +4,27 @@ import com.gilberto.logistockapi.exceptions.ProductAlreadyRegisteredException;
 import com.gilberto.logistockapi.exceptions.ProductNotFoundException;
 import com.gilberto.logistockapi.exceptions.ProductStockExceededException;
 import com.gilberto.logistockapi.exceptions.ProductStockUnderThanZeroException;
+import com.gilberto.logistockapi.models.dto.request.ProductBaseForm;
 import com.gilberto.logistockapi.models.dto.request.ProductForm;
-import com.gilberto.logistockapi.models.dto.response.MessageResponseDTO;
+import com.gilberto.logistockapi.models.dto.request.QuantityForm;
+import com.gilberto.logistockapi.models.dto.response.ProductDTO;
 import java.util.List;
-import org.springframework.stereotype.Service;
+import javax.validation.Valid;
 
-@Service
 public interface IProductService {
   
-  MessageResponseDTO createProduct(ProductForm productDTO) throws ProductAlreadyRegisteredException;
+  ProductDTO create(ProductForm productDTO) throws ProductAlreadyRegisteredException;
   
-  List<ProductForm> listAll();
+  List<ProductDTO> listAll();
   
-  ProductForm findByBarCode(String name) throws ProductNotFoundException;
+  ProductDTO findByBarCode(String name) throws ProductNotFoundException;
   
-  MessageResponseDTO delete(Long id) throws ProductNotFoundException;
+  void delete(Long id) throws ProductNotFoundException;
   
-  MessageResponseDTO updateById(Long id, ProductForm productDTO) throws ProductNotFoundException;
+  ProductDTO updateById(Long id, ProductBaseForm productDTO) throws ProductNotFoundException;
   
-  ProductForm increment(Long id, Integer quantityToIncrement) throws ProductNotFoundException, ProductStockExceededException;
+  ProductDTO increment(Long id, @Valid QuantityForm quantity) throws ProductNotFoundException, ProductStockExceededException;
   
-  ProductForm decrement(Long id, Integer quantityToDecrement) throws ProductNotFoundException, ProductStockUnderThanZeroException;
+  ProductDTO decrement(Long id, @Valid QuantityForm quantity) throws ProductNotFoundException, ProductStockUnderThanZeroException;
   
 }
