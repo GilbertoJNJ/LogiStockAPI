@@ -1,43 +1,22 @@
 package com.gilberto.logistockapi.models.dto.request;
 
 import com.gilberto.logistockapi.models.entity.Product;
-import com.gilberto.logistockapi.models.enums.Category;
-import com.gilberto.logistockapi.models.enums.MeasureUnit;
-import java.math.BigDecimal;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
+@EqualsAndHashCode(callSuper = false)
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductForm {
-  
-  @NotNull
-  @Size(min = 2, max = 100)
-  private String name;
+public final class ProductForm extends ProductBaseForm {
   
   @NotNull
   @Size(min = 2, max = 100)
   private String barCode;
-  
-  @NotNull
-  private Category category;
-  
-  @Valid
-  private SupplierForm supplier;
-  
-  @NotNull
-  private BigDecimal unitPrice;
-  
-  @NotNull
-  private MeasureUnit measureUnit;
   
   private Integer stockQuantity = 0;
   
@@ -45,11 +24,9 @@ public class ProductForm {
   
   private Integer maxStockLevel = 100;
   
-  private String description;
-  
   public ProductForm(Product product) {
-    this.name          = product.getName();
-    this.unitPrice     = product.getUnitPrice();
+    this.setName(product.getName());
+    this.setUnitPrice(product.getUnitPrice());
     this.maxStockLevel = product.getMaxStockLevel();
   }
   
