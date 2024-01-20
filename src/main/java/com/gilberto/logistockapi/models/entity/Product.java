@@ -12,6 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
@@ -45,7 +46,8 @@ public class Product {
   @Enumerated(value = EnumType.STRING)
   private Category category;
   
-  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @JoinColumn(name = "pro_supplier_id")
   private Supplier supplier;
   
   @Column(name = "pro_unit_price", nullable = false)

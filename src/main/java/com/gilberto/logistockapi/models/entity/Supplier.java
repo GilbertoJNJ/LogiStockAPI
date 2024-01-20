@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,8 @@ public class Supplier {
   @Column(name = "sup_phone")
   private String phone;
   
-  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @JoinColumn(name = "sup_address_id")
   private Address address;
   
 }
