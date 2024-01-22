@@ -1,18 +1,10 @@
 package com.gilberto.logistockapi.models.dto.request;
 
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class QuantityForm {
-  
-  @NotNull
-  private Integer quantity;
-  
+public record QuantityForm(
+    @NotNull
+    Integer quantity
+) {
+
 }
