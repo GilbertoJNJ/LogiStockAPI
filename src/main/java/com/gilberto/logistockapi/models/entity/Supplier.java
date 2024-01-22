@@ -31,7 +31,7 @@ public class Supplier {
   @Column(name = "sup_name", nullable = false)
   private String name;
   
-  @Column(name = "sup_legal_document", nullable = false)
+  @Column(name = "sup_legal_document", nullable = false, unique = true)
   private String legalDocument;
   
   @Column(name = "sup_email")
