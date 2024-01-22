@@ -1,6 +1,5 @@
 package com.gilberto.logistockapi.models.entity;
 
-import com.gilberto.logistockapi.models.dto.request.ProductForm;
 import com.gilberto.logistockapi.models.enums.Category;
 import com.gilberto.logistockapi.models.enums.MeasureUnit;
 import jakarta.persistence.CascadeType;
@@ -14,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -23,10 +21,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity
 @Data
 @Builder
-@Table(name = "pro_product")
+@Entity(name = "pro_product")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -60,9 +57,6 @@ public class Product {
   @Column(name = "pro_stock_quantity", nullable = false)
   private Integer stockQuantity;
   
-  @Column(name = "pro_min_stock_level", nullable = false)
-  private Integer minStockLevel;
-  
   @Column(name = "pro_max_stock_level", nullable = false)
   private Integer maxStockLevel;
   
@@ -72,17 +66,5 @@ public class Product {
   
   @Column(name = "pro_description")
   private String description;
-  
-  public Product(ProductForm form) {
-    this.name = form.getName();
-    this.barCode = form.getBarCode();
-    this.category = form.getCategory();
-    this.unitPrice = form.getUnitPrice();
-    this.measureUnit = form.getMeasureUnit();
-    this.stockQuantity = form.getStockQuantity();
-    this.minStockLevel = form.getMinStockLevel();
-    this.maxStockLevel = form.getMaxStockLevel();
-    this.description = form.getDescription();
-  }
   
 }
