@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: LogiStockAPI
+  datasource:
+    url: jdbc:h2:mem:testdb
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    open-in-view: true

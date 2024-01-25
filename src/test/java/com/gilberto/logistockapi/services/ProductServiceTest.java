@@ -30,7 +30,9 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.springframework.context.annotation.Profile;
 
+@Profile("test")
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
   
