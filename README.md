@@ -7,11 +7,11 @@
 * [5. How To Use](#how-to-use)
 
 ## Description
-:trophy: Registry, update or delete products in a database;
+:trophy: Registry, update or delete products in the system;
 
-:trophy: Lists all the products of an establishment and searches by name;
+:trophy: Return a paginated list of products or find by barcode or ID;
 
-:trophy: Control stock by increasing or decreasing the quantity of products.
+:trophy: Control stock levels by increasing or decreasing the quantity.
 
 ## Technologies
 - <img src="https://img.shields.io/static/v1?label=java&message=language&color=red&style=for-the-badge&logo=java"/>
@@ -24,6 +24,7 @@
  - Spring Data JPA
  - Spring Web
  - [Lombok](https://projectlombok.org/)
+ - [Swagger](https://swagger.io/)
 
 ## Install 
 1. In the terminal, clone the project:
@@ -47,75 +48,8 @@ mvn clean test
 ```
 
 ## How To Use 
-### Postman
-1. POST Products:
- ```shell script
- http://localhost:8080/api/v1/products
-```
-```shell script
-{
-    "name": "",
-    "buyPrice": "",
-    "sellPrice": "",
-    "category":{
-        "category": ""
-    },
-    "quantity": ,
-    "maxQuantity": 
-}
-```
 
-2. PUT Products (by id):
- ```shell script
- http://localhost:8080/api/v1/products/[id]
+Access documentation after building the project:
 ```
-```shell script
-{
-    "id": ,
-    "name": "",
-    "buyPrice": "",
-    "sellPrice": "",
-    "category":{
-        "category": ""
-    },
-    "quantity": ,
-    "maxQuantity": 
-}
-```
-
-3. DELETE Products (by id):
- ```shell script
- http://localhost:8080/api/v1/products/[id]
-```
-
-4. GET all Products:
- ```shell script
- http://localhost:8080/api/v1/products
-```
-
-5. GET Products (by name):
-```shell script
-http://localhost:8080/api/v1/products/[name]
-```
-
-6. PATCH quantity of Products (by id):
-   
-- 6.1 Increment
-```shell script
-http://localhost:8080/api/v1/products/[id]/increment
-```
-```shell script
-{
-    "quantity":    
-}
-```
-
-- 6.2 Decrement
-```shell script
-http://localhost:8080/api/v1/products/[id]/decrement
-```
-```shell script
-{
-    "quantity":    
-}
+http://localhost:8080/swagger-ui.html
 ```
