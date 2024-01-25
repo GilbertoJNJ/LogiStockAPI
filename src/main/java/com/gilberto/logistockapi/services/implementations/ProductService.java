@@ -1,6 +1,7 @@
 package com.gilberto.logistockapi.services.implementations;
 
 import com.gilberto.logistockapi.mappers.IProductMapper;
+import com.gilberto.logistockapi.mappers.ProductMapper;
 import com.gilberto.logistockapi.models.dto.request.ProductFilter;
 import com.gilberto.logistockapi.models.dto.request.ProductUpdateForm;
 import com.gilberto.logistockapi.models.dto.request.ProductForm;
@@ -33,15 +34,14 @@ public class ProductService implements IProductService {
     private final ISupplierService supplierService;
     
     public ProductService(@Autowired IProductRepository productRepository,
-                          @Autowired ISupplierService supplierService,
-                          @Autowired IProductMapper productMapper) {
-        this.productRepository  = productRepository;
-        this.supplierService    = supplierService;
-        this.productMapper      = productMapper;
+                          @Autowired ISupplierService supplierService) {
+        this.productRepository = productRepository;
+        this.supplierService   = supplierService;
+        this.productMapper     = new ProductMapper();
     }
 
     @Override
-    public ProductDTO create(ProductForm productForm) throws ProductAlreadyRegisteredException{
+    public ProductDTO create(ProductForm productForm) throws ProductAlreadyRegisteredException {
 
         verifyIfIsAlreadyRegistered(productForm.barCode());
         
@@ -105,7 +105,7 @@ public class ProductService implements IProductService {
     }
     
     @Override
-    public ProductDTO increment(Long id, QuantityForm quantityForm)
+    public ProductDTO increaseStock(Long id, QuantityForm quantityForm)
         throws ProductNotFoundException, ProductStockExceededException {
         var product = verifyIfExists(id);
         var updatedQuantity = sumQuantity(product.getStockQuantity(), quantityForm.quantity());
@@ -120,12 +120,12 @@ public class ProductService implements IProductService {
     }
     
     @Override
-    public ProductDTO decrement(Long id, QuantityForm quantityForm)
+    public ProductDTO decreaseStock(Long id, QuantityForm quantityForm)
         throws ProductNotFoundException, ProductStockUnderThanZeroException {
         var product = verifyIfExists(id);
         var updatedQuantity = subtractQuantity(product.getStockQuantity(), quantityForm.quantity());
         
-        if (updatedQuantity == 0) {
+        if (updatedQuantity < 0) {
             throw new ProductStockUnderThanZeroException();
         }
         
@@ -139,7 +139,7 @@ public class ProductService implements IProductService {
     }
     
     private Integer subtractQuantity(Integer stockQuantity, Integer quantityToDecrement) {
-        return Math.max(0, stockQuantity - quantityToDecrement);
+        return stockQuantity - quantityToDecrement;
     }
 
     private Product verifyIfExists(Long id) throws ProductNotFoundException {

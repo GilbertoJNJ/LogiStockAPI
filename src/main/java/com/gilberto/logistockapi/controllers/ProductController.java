@@ -80,20 +80,20 @@ public class ProductController {
     return ResponseEntity.noContent().build();
   }
   
-  @PatchMapping("/{id}/increment")
+  @PatchMapping("/{id}/increase")
   @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<ProductDTO> increment(@PathVariable Long id,
-                                              @RequestBody @Valid QuantityForm quantityForm)
+  public ResponseEntity<ProductDTO> increaseStock(@PathVariable Long id,
+                                                  @RequestBody @Valid QuantityForm quantityForm)
       throws ProductNotFoundException, ProductStockExceededException {
-    return ResponseEntity.ok(this.productService.increment(id, quantityForm));
+    return ResponseEntity.ok(this.productService.increaseStock(id, quantityForm));
   }
   
-  @PatchMapping("/{id}/decrement")
+  @PatchMapping("/{id}/decrease")
   @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<ProductDTO> decrement(@PathVariable Long id,
+  public ResponseEntity<ProductDTO> decreaseStock(@PathVariable Long id,
                                               @RequestBody @Valid QuantityForm quantityForm)
       throws ProductStockUnderThanZeroException, ProductNotFoundException {
-    return ResponseEntity.ok(this.productService.decrement(id, quantityForm));
+    return ResponseEntity.ok(this.productService.decreaseStock(id, quantityForm));
   }
   
 }

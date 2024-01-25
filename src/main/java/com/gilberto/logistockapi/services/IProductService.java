@@ -25,10 +25,10 @@ public interface IProductService {
   
   ProductDTO updateById(Long id, ProductUpdateForm updateForm) throws ProductNotFoundException;
   
-  ProductDTO increment(Long id, QuantityForm quantity)
+  ProductDTO increaseStock(Long id, QuantityForm quantity)
       throws ProductNotFoundException, ProductStockExceededException;
   
-  ProductDTO decrement(Long id, QuantityForm quantity)
+  ProductDTO decreaseStock(Long id, QuantityForm quantity)
       throws ProductNotFoundException, ProductStockUnderThanZeroException;
   
 }

@@ -5,9 +5,7 @@ import com.gilberto.logistockapi.models.dto.response.ProductDTO;
 import com.gilberto.logistockapi.models.dto.response.SupplierDTO;
 import com.gilberto.logistockapi.models.entity.Product;
 import com.gilberto.logistockapi.models.entity.Supplier;
-import org.springframework.stereotype.Service;
 
-@Service
 public class ProductMapper implements IProductMapper {
   
   @Override

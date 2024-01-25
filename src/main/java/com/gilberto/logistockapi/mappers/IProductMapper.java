@@ -9,5 +9,5 @@ public interface IProductMapper {
   Product toProduct(ProductForm productForm);
   
   ProductDTO toProductDTO(Product product);
-
+  
 }
