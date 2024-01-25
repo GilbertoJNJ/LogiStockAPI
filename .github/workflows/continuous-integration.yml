@@ -1,4 +1,5 @@
 name: Continuous Integration
+
 on:
   pull_request:
     branches: [ '**' ]
@@ -18,8 +19,8 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn spring-boot:run
+      - name: Build with Maven (skip Spring Boot run)
+        run: mvn clean install -Dspring-boot.run.skip=true
 
       - name: Test
         run: mvn clean test
