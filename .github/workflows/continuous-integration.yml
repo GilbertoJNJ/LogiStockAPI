@@ -19,8 +19,5 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Build with Maven (skip Spring Boot run)
-        run: mvn clean install -Dspring-boot.run.skip=true
-
-      - name: Test
-        run: mvn clean test
+      - name: Build & Test
+        run: mvn clean install
