@@ -13,8 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download LogiStockApi-application.yml
-        run: curl -o application.yml -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://github.com/GilbertoJNJ/Config-files/blob/main/LogiStockApi-application.yml
+#      - name: Download LogiStockApi-application.yml
+#        run: curl -o application.yml -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://github.com/GilbertoJNJ/Config-files/blob/main/LogiStockApi-application.yml
 
       - name: Set up Java
         uses: actions/setup-java@v2
