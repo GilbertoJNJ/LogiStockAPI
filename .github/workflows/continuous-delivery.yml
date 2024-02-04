@@ -13,7 +13,7 @@ jobs:
       - name: Checkout private config repository
         uses: actions/checkout@v2
         with:
-          repository: 'GilbertoJNJ/Config-files'
+          repository: 'GilbertoJNJ/Config-files/blob'
           ref: 'main'
           token: ${{ secrets.GITHUB_TOKEN }}
 
