@@ -6,35 +6,21 @@ on:
       - 'v*.*.*'
 
 jobs:
-  replace-config:
+  modify-application-yml:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout private config repository
+      - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          repository: 'GilbertoJNJ/Config-files'
-          ref: 'main'
-          token: ${{ secrets.PRIVATE_REPO_ACCESS_TOKEN }}
 
-      - name: Remove application.yml from src/main/resources/
-        run: rm src/main/resources/application.yml
-
-      - name: Move application.yml from LogiStockAPI to src/main/resources/
-        run: mv LogiStockAPI/application.yml src/main/resources/
-
-      - name: Verify application.yml
+      - name: Modify application.yml
         run: |
-          if grep -q "spring.application.name" src/main/resources/application.yml; then
-            echo "Valor de spring.application.name:"
-            awk '/spring.application.name/ {print $2}' src/main/resources/application.yml
-          else
-            echo "O arquivo application.yml não contém a propriedade spring.application.name"
-            exit 1
-          fi
+          sed -i "s|url:.*|url: ${{ secrets.DATASOURCE_URL }}|" src/main/resources/application.yml
+          sed -i "s|username:.*|username: ${{ secrets.DATASOURCE_USERNAME }}|" src/main/resources/application.yml
+          sed -i "s|password:.*|password: ${{ secrets.DATASOURCE_PASSWORD }}|" src/main/resources/application.yml
 
   build:
-    needs: replace-config
+    needs: modify-application-yml
     runs-on: ubuntu-latest
 
     steps:
