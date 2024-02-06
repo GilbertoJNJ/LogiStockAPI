@@ -15,18 +15,17 @@ jobs:
 
       - name: Modify application.yml
         run: |
-          sed -i "s|url:.*|url: ${{ secrets.DATASOURCE_URL }}|" src/main/resources/application.yml
-          sed -i "s|username:.*|username: ${{ secrets.DATASOURCE_USERNAME }}|" src/main/resources/application.yml
-          sed -i "s|password:.*|password: ${{ secrets.DATASOURCE_PASSWORD }}|" src/main/resources/application.yml
+          sed -i "s|^ *active:.*|  active: default|" src/main/resources/application.yml
+          sed -i "s|^ *url:.*|  url: ${{ secrets.DATASOURCE_URL }}|" src/main/resources/application.yml
+          sed -i "s|^ *username:.*|  username: ${{ secrets.DATASOURCE_USERNAME }}|" src/main/resources/application.yml
+          sed -i "s|^ *password:.*|  password: ${{ secrets.DATASOURCE_PASSWORD }}|" src/main/resources/application.yml
+          cat src/main/resources/application.yml
 
   build:
     needs: modify-application-yml
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:

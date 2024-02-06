@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: test
   application:
     name: LogiStockAPI
   datasource:
@@ -10,3 +12,6 @@ spring:
       enabled: always
   jpa:
     open-in-view: true
+
+server:
+  port: 8080
