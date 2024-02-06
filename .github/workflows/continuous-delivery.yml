@@ -19,6 +19,12 @@ jobs:
           sed -i "s|username:.*|username: ${{ secrets.DATASOURCE_USERNAME }}|" src/main/resources/application.yml
           sed -i "s|password:.*|password: ${{ secrets.DATASOURCE_PASSWORD }}|" src/main/resources/application.yml
 
+      - name: Modify profile and print
+        run: |
+          sed -i "s|^  active:.*|  active: default|" src/main/resources/application.yml
+          grep "^spring.profiles.active" src/main/resources/application.yml | cut -d ":" -f 2-
+
+
   build:
     needs: modify-application-yml
     runs-on: ubuntu-latest
