@@ -15,10 +15,12 @@ jobs:
 
       - name: Modify application.yml
         run: |
-          sed -i "s|^ *active:.*|  active: default|" src/main/resources/application.yml
+          sed -i '/^\s*profiles:\|^\s*active:/d' src/main/resources/application.yml
           sed -i "s|^ *url:.*|  url: ${{ secrets.DATASOURCE_URL }}|" src/main/resources/application.yml
           sed -i "s|^ *username:.*|  username: ${{ secrets.DATASOURCE_USERNAME }}|" src/main/resources/application.yml
           sed -i "s|^ *password:.*|  password: ${{ secrets.DATASOURCE_PASSWORD }}|" src/main/resources/application.yml
+          sed -i '/^\s*datasource:\s*$/d' src/main/resources/application.yml
+          sed -i 's/^datasource:/    &/' src/main/resources/application.yml
           cat src/main/resources/application.yml
 
       - name: Set up JDK 17
