@@ -35,12 +35,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to EC2
+      - name: Build Docker image
+        run: docker build -t logistock-image .
+
+      - name: Deploy Docker container to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            scp target/your-application.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/path/to/deployment/directory
-            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'bash -s' < deploy_script.sh
+            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'docker run -d --name logistock -p 80:8080 logistock-image'
+
+#      - name: Deploy to EC2
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ${{ secrets.EC2_USERNAME }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          script: |
+#            scp target/your-application.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/path/to/deployment/directory
+#            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'bash -s' < deploy_script.sh
