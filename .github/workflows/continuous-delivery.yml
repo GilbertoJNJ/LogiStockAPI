@@ -35,6 +35,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: List files in directory
+        run: ls
+
       - name: Build Docker image
         run: docker build -t logistock-image .
 
