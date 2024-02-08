@@ -43,7 +43,9 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'docker run -d --name logistock -p 80:8080 logistock-image'
+            echo ${{ secrets.SSH_PRIVATE_KEY }} > ssh_key.pem
+            chmod 600 ssh_key.pem
+            ssh -i "ssh_key.pem" ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'docker run -d --name logistock -p 80:8080 logistock-image'
 
 #      - name: Deploy to EC2
 #        uses: appleboy/ssh-action@master
