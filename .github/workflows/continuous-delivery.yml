@@ -30,28 +30,15 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: List files in directory
-        run: ls
-
       - name: Build Docker image
         run: docker build -t logistock-image .
 
       - name: Deploy Docker container to EC2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key.pem
-            ssh -i "ssh_key.pem" ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'docker run -d --name logistock -p 80:8080 logistock-image'
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOSTNAME: ${{ secrets.EC2_HOST }}
+          USER_NAME: ${{ secrets.EC2_USERNAME }}
 
-#      - name: Deploy to EC2
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ${{ secrets.EC2_USERNAME }}
-#          key: ${{ secrets.SSH_PRIVATE_KEY }}
-#          script: |
-#            scp target/your-application.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/path/to/deployment/directory
-#            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'bash -s' < deploy_script.sh
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'docker run -d --name logistock -p 80:8080 logistock-image'
