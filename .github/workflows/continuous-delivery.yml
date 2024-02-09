@@ -31,14 +31,25 @@ jobs:
         run: mvn clean install
 
       - name: Build Docker image
-        run: docker build -t logistock-image .
+        run: |
+          docker build -t logistock-image .
+          docker tag logistock-image:latest gilbertojnj/logistock-image:latest
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: gilbertojnj
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push image to Docker Hub
+        run: docker push gilbertojnj/logistock-image:latest
 
       - name: Deploy Docker container to EC2
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          HOSTNAME: ${{ secrets.EC2_HOST }}
+          HOST_NAME: ${{ secrets.EC2_HOST }}
           USER_NAME: ${{ secrets.EC2_USERNAME }}
 
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'docker run -d --name logistock -p 80:8080 logistock-image'
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME} 'docker run -d --name logistock -p 80:8080 gilbertojnj/logistock-image:latest'
