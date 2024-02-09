@@ -52,4 +52,7 @@ jobs:
 
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME} 'docker run -d --name logistock -p 80:8080 gilbertojnj/logistock-image:latest'
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME} '
+            docker stop logistock || true
+            docker rm logistock || true
+            docker run -d --name logistock -p 80:8080 gilbertojnj/logistock-image:latest'
