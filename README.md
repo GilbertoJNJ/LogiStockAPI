@@ -19,6 +19,7 @@
 - <img src="https://img.shields.io/static/v1?label=postgres&message=database&color=blue&style=for-the-badge&logo=postgresql"/>
 - <img src="https://img.shields.io/static/v1?label=spring&message=framework&color=green&style=for-the-badge&logo=spring"/>
 - <img src="https://img.shields.io/static/v1?label=junit&message=tests&color=darkgreen&style=for-the-badge&logo=junit5"/>
+- <img src="https://img.shields.io/static/v1?label=aws&message=deploy&color=orange&style=for-the-badge&logo=aws"/> from github actions
 
 ## Dependencies
  - Spring Data JPA
